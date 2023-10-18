@@ -6,7 +6,7 @@ local stopwatchText = "0.00"
 -- Function to update the stopwatch text
 local function updateStopwatchText()
 	if stopwatchRunning then
-		currentTime = tick() - startTime
+		local currentTime = tick() - startTime
 		stopwatchText = string.format("Lap Time: %.2f", currentTime) -- Format the time to two decimal places
 	end
 end
