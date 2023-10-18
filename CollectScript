@@ -1,0 +1,58 @@
+local Players = game:GetService("Players")
+local stopwatchRunning = false
+local startTime = 0
+local stopwatchText = "0.00"
+
+-- Function to update the stopwatch text
+local function updateStopwatchText()
+	if stopwatchRunning then
+		currentTime = tick() - startTime
+		stopwatchText = string.format("Lap Time: %.2f", currentTime) -- Format the time to two decimal places
+	end
+end
+
+-- Function to start the stopwatch
+local function startStopwatch()
+	if not stopwatchRunning then
+		startTime = tick()
+		stopwatchRunning = true
+	end
+end
+
+-- Function to stop the stopwatch
+local function stopStopwatch()
+	if stopwatchRunning then
+		stopwatchRunning = false
+	end
+end
+
+-- Function to reset the stopwatch
+local function resetStopwatch()
+	stopStopwatch()
+	stopwatchText = "0.00"
+	startStopwatch()
+end
+
+print("Check 2")
+
+-- Start the stopwatch when the game begins
+startStopwatch()
+--game:GetService("RunService").RenderStepped:Connect(updateStopwatchText)
+
+while true do
+	updateStopwatchText()
+	if currentTime > 10 then
+		script.Parent.Touched:Connect(function(hit)
+			if hit.Parent:FindFirstChild("Humanoid") ~= nil then
+				local player = game.Players:GetPlayerFromCharacter(hit.Parent)
+				stopStopwatch()
+				player.PlayerGui.ScreenGui.LapTime.Text = stopwatchText
+				player.PlayerGui.ScreenGui.LapTime.Visible = true
+				wait(3)
+				player.PlayerGui.ScreenGui.LapTime.Visible = false
+				resetStopwatch()
+			end
+		end)
+	end
+	wait(0.01)
+end
