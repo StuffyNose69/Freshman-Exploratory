@@ -41,18 +41,16 @@ startStopwatch()
 
 while true do
 	updateStopwatchText()
-	if currentTime > 10 then
-		script.Parent.Touched:Connect(function(hit)
-			if hit.Parent:FindFirstChild("Humanoid") ~= nil then
-				local player = game.Players:GetPlayerFromCharacter(hit.Parent)
-				stopStopwatch()
-				player.PlayerGui.ScreenGui.LapTime.Text = stopwatchText
-				player.PlayerGui.ScreenGui.LapTime.Visible = true
-				wait(3)
-				player.PlayerGui.ScreenGui.LapTime.Visible = false
-				resetStopwatch()
-			end
-		end)
-	end
+	script.Parent.Touched:Connect(function(hit)
+		if hit.Parent:FindFirstChild("Humanoid") ~= nil then
+			local player = game.Players:GetPlayerFromCharacter(hit.Parent)
+			stopStopwatch()
+			player.PlayerGui.ScreenGui.LapTime.Text = stopwatchText
+			player.PlayerGui.ScreenGui.LapTime.Visible = true
+			wait(3)
+			player.PlayerGui.ScreenGui.LapTime.Visible = false
+			resetStopwatch()
+		end
+	end)
 	wait(0.01)
 end
